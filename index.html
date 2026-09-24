@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="color-scheme" content="only light">
+ <meta name="theme-color" content="#ffffff">
+ <title>Menú | Más que Burgers</title>
+ <link rel="icon" href="https://imagedelivery.net/ut8GNCA1obOu4JnXrJ_J9Q/e7b59903-06e0-48f8-1bb1-71bd6da8a800/public" type="image/x-icon">
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+ 
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-TV9F5PGKSE"></script>
+ <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TV9F5PGKSE');
+ </script>
+ 
+ <script>
+ tailwind.config = {
+     theme: {
+         extend: {
+             colors: {
+                 'mqb-blue': '#014926',
+                 'mqb-dark': '#0a0a0b',
+             },
+             fontFamily: {
+                 'impact': ['Bebas Neue', 'sans-serif'],
+                 'sans': ['Inter', 'sans-serif'],
+             }
+         }
+     }
+ }
+ </script>
+
+ <style>
+    :root { color-scheme: only light !important; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .bg-pattern {
+        background-image: radial-gradient(#014926 0.5px, transparent 0.5px);
+        background-size: 30px 30px;
+        opacity: 0.05;
+    }
+    .category-btn.active {
+        background-color: #014926 !important;
+        color: white !important;
+    }
+    /* Botón "Promos": color distintivo (ámbar) para diferenciarlo del resto */
+    .promo-btn {
+        background-color: rgba(245, 158, 11, 0.10) !important;
+        color: #b45309 !important;
+        border-color: rgba(245, 158, 11, 0.35) !important;
+    }
+    .promo-btn:hover {
+        background-color: rgba(245, 158, 11, 0.18) !important;
+    }
+    .promo-btn.active {
+        background-color: #f59e0b !important;
+        color: white !important;
+        border-color: #f59e0b !important;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.4s ease forwards; }
+
+    /* Buscador */
+    #search-input { border: 2px solid #e5e7eb; transition: border-color 0.25s, box-shadow 0.25s; }
+    #search-input:focus { border-color: #014926; box-shadow: 0 0 0 4px rgba(1, 73, 38, 0.08); outline: none; }
+    #clear-search { transition: transform 0.15s; }
+    #clear-search:hover { transform: scale(1.15); }
+    mark { background-color: rgba(1, 73, 38, 0.13); color: #014926; font-weight: 700; border-radius: 3px; padding: 0 2px; }
+    #no-results { animation: fadeIn 0.3s ease forwards; }
+    #bebidas-dropdown { transition: opacity 0.15s ease; }
+
+    /* ── Carousel ofertas ── */
+    #ofertas-carousel-global { touch-action: pan-y; }
+    .carousel-slide { flex: 0 0 100%; min-width: 0; }
+
+    .oferta-event-pill {
+        background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+        letter-spacing: 0.12em;
+    }
+
+    .variant-toggle {
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        color: rgba(255,255,255,0.6);
+        background: transparent;
+        border: 1px solid transparent;
+    }
+    .variant-toggle:not(.active):hover {
+        color: #fff;
+        background: rgba(255,255,255,0.08);
+    }
+    .variant-toggle.active {
+        background: linear-gradient(135deg, #014926 0%, #026b38 100%);
+        color: #fff;
+        border-color: rgba(2, 107, 56, 0.5);
+        box-shadow: 0 4px 15px rgba(1, 73, 38, 0.4);
+    }
+
+    .precio-oferta-num {
+        color: #f87171;
+        text-shadow: 0 0 30px rgba(248,113,113,0.45);
+    }
+
+    .ahorro-chip {
+        background: linear-gradient(90deg, rgba(251,191,36,0.15) 0%, rgba(251,191,36,0.05) 100%);
+        border: 1px solid rgba(251,191,36,0.4);
+        color: #fcd34d;
+    }
+
+    .carousel-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: rgba(255,255,255,0.25);
+        transition: all 0.3s ease; cursor: pointer; flex-shrink:0;
+    }
+    .carousel-dot.active {
+        background: #fff;
+        width: 20px; border-radius: 3px;
+    }
+
+    @keyframes progress-bar {
+        from { width: 0%; }
+        to   { width: 100%; }
+    }
+    .carousel-progress-bar {
+        animation: progress-bar 9000ms linear forwards;
+    }
+
+    @keyframes slideReveal {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .slide-reveal { animation: slideReveal 0.35s ease forwards; }
+
+    @media (prefers-color-scheme: dark) { html { filter: invert(0%) !important; } }
+
+    /* ── Banner Fidelidad ── */
+    .mqb-banner-fidelidad {
+        background-color: #014926;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+    }
+    @media (min-width: 641px) {
+        .mqb-banner-fidelidad { min-height: 230px; }
+    }
+    .mqb-banner-dots {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255,255,255,0.07) 1.5px, transparent 1.5px);
+        background-size: 22px 22px;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* ── Layout desktop: fila única ── */
+    .mqb-banner-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 28px 36px;
+        gap: 24px;
+        overflow: visible;
+    }
+    /* Desktop: sin teléfono, padding normal (ya no hace falta espacio extra arriba) */
+    @media (min-width: 641px) {
+        .mqb-banner-inner {
+            padding-top: 28px;
+        }
+        .mqb-banner-left {
+            flex: 0 1 auto;
+            max-width: 460px;
+        }
+    }
+    .mqb-banner-left { flex: 1; min-width: 0; }
+
+    /* ── Layout mobile: grilla 2 columnas arriba + CTA abajo ── */
+    @media (max-width: 640px) {
+        .mqb-banner-inner {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto auto;
+            grid-template-areas:
+                "left phone"
+                "cta  cta";
+            padding: 20px 18px 22px;
+            gap: 16px 12px;
+            align-items: start;
+        }
+        .mqb-banner-left   { grid-area: left; }
+        .mqb-banner-divider { display: none; }
+        .mqb-phone-mockup  { grid-area: phone; align-self: center; }
+        .mqb-banner-right  { grid-area: cta; width: 100%; align-items: flex-start; }
+        .mqb-banner-hint   { text-align: left; }
+        .mqb-banner-subtitle { max-width: 100%; }
+    }
+
+    .mqb-banner-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(255,255,255,0.11);
+        border: 1px solid rgba(255,255,255,0.18);
+        color: #c6f0d9;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        padding: 5px 13px;
+        border-radius: 100px;
+        margin-bottom: 13px;
+        font-family: 'Inter', sans-serif;
+    }
+    .mqb-banner-eyebrow-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #4ade80;
+        flex-shrink: 0;
+        display: inline-block;
+    }
+    .mqb-banner-headline {
+        font-family: 'Bebas Neue', sans-serif;
+        color: #ffffff;
+        line-height: 0.9;
+        letter-spacing: 0.01em;
+        margin: 0 0 4px 0;
+        font-weight: 400;
+    }
+    .mqb-banner-headline span.accent { color: #a3f0c4; }
+    .mqb-banner-hl-size { font-size: clamp(30px, 5vw, 62px); display: block; }
+    .mqb-banner-subtitle {
+        color: rgba(255,255,255,0.72);
+        font-size: clamp(11px, 1.5vw, 15px);
+        font-weight: 500;
+        line-height: 1.55;
+        margin: 10px 0 0;
+        max-width: 340px;
+        font-family: 'Inter', sans-serif;
+    }
+    .mqb-banner-divider {
+        display: none;
+    }
+    @media (min-width: 641px) {
+        .mqb-banner-divider {
+            display: block;
+            width: 1px;
+            height: 72px;
+            background: rgba(255,255,255,0.16);
+            flex-shrink: 0;
+        }
+    }
+    .mqb-banner-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+    .mqb-banner-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        background: #ffffff;
+        color: #014926;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 900;
+        text-decoration: none;
+        padding: 13px 22px;
+        border-radius: 100px;
+        white-space: nowrap;
+        letter-spacing: -0.01em;
+        transition: background 0.15s;
+    }
+    .mqb-banner-cta:hover { background: #d4f5e3; }
+    .mqb-banner-hint {
+        color: rgba(255,255,255,0.4);
+        font-size: 10px;
+        font-weight: 500;
+        text-align: right;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* ── Bloque QR (solo desktop, rellena el hueco donde antes iba el celular) ── */
+    .mqb-banner-qr {
+        display: none;
+    }
+    @media (min-width: 641px) {
+        .mqb-banner-qr {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .mqb-banner-qr img {
+            width: 132px;
+            height: 132px;
+            display: block;
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 8px;
+        }
+        .mqb-banner-qr span {
+            color: rgba(255,255,255,0.55);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            max-width: 140px;
+            line-height: 1.4;
+        }
+    }
+
+    /* ── Mockup Celular ── */
+    .mqb-phone-mockup {
+        /* Mobile: ocupa su celda en el grid */
+        flex-shrink: 0;
+        width: 90px;
+        height: 172px;
+        border-radius: 18px;
+        border: 2.5px solid rgba(255,255,255,0.22);
+        background: #01331a;
+        box-shadow:
+            0 0 0 1px rgba(0,0,0,0.25),
+            0 20px 50px rgba(0,0,0,0.45),
+            0 4px 16px rgba(0,0,0,0.3),
+            inset 0 0 0 1px rgba(255,255,255,0.06);
+        position: relative;
+        overflow: hidden;
+    }
+    /* Notch pill */
+    .mqb-phone-mockup::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 28px;
+        height: 4px;
+        background: rgba(255,255,255,0.18);
+        border-radius: 100px;
+        z-index: 2;
+    }
+    /* Brillo superior */
+    .mqb-phone-mockup::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 50%;
+        background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%);
+        border-radius: 18px 18px 0 0;
+        pointer-events: none;
+        z-index: 2;
+    }
+    .mqb-phone-screen {
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    .mqb-phone-screen img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+    }
+
+    /* Desktop: sin mockup de celular (no tiene sentido en pantallas grandes) */
+    @media (min-width: 641px) {
+        .mqb-phone-mockup {
+            display: none;
+        }
+    }
+
+ </style>
+</head>
+<body class="bg-white text-mqb-dark font-sans selection:bg-mqb-blue selection:text-white">
+
+ <div class="fixed inset-0 bg-pattern -z-10"></div>
+
+ <header class="sticky top-0 z-50 bg-white/95 border-b border-gray-100" style="will-change: transform;">
+     <div class="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+         <div class="flex items-center gap-4">
+             <img src="https://imagedelivery.net/ut8GNCA1obOu4JnXrJ_J9Q/e7b59903-06e0-48f8-1bb1-71bd6da8a800/public" 
+             alt="Logo Mas que Burger's" class="w-14 h-14 object-contain">
+             <div>
+                 <h1 class="font-impact text-3xl tracking-tight leading-none uppercase">Mas que <span class="text-mqb-blue">Burgers</span></h1>
+                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest italic">Más sabor en cada bocado</p>
+             </div>
+         </div>
+
+        <nav id="category-nav" class="grid grid-cols-3 md:flex gap-2 w-full md:w-auto md:overflow-x-auto md:no-scrollbar pb-2 md:pb-0 items-stretch md:items-center">
+             
+             <button class="category-btn active px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-gray-100 flex items-center justify-center text-center">Burgers</button>
+             
+             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center">Para compartir</button>
+             
+             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center">Papas</button>
+             
+             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center">Kids</button>
+             
+             <button id="bebidas-toggle" class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center gap-1 flex-shrink-0 text-center">
+                 Bebidas <i id="bebidas-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+             </button>
+             
+             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center">Agregados</button>
+             
+             <button class="category-btn promo-btn col-start-2 md:col-start-auto px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border flex items-center justify-center gap-1.5 text-center">
+                 <i class="fa-solid fa-tag text-[10px]"></i> Promos
+             </button>
+             
+         </nav>
+         
+         <div id="bebidas-dropdown" class="hidden fixed z-[9999] flex-col gap-1 bg-white border border-gray-100 rounded-2xl p-2" style="box-shadow: 0 8px 30px -4px rgba(0,0,0,0.18), 0 2px 8px -2px rgba(1,73,38,0.10); min-width: 220px;">
+             <button class="category-btn sub-btn bg-gray-50/50 px-4 py-3 rounded-xl whitespace-nowrap text-xs font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 text-left w-full">Sin alcohol</button>
+             <button class="category-btn sub-btn bg-gray-50/50 px-4 py-3 rounded-xl whitespace-nowrap text-xs font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 text-left w-full">Con alcohol</button>
+         </div>
+     </div>
+ </header>
+
+ <div class="bg-mqb-blue/5 border-b border-mqb-blue/10 py-3 px-4 text-center">
+     <p class="text-xs font-bold text-mqb-blue uppercase tracking-wider flex items-center justify-center gap-2">
+         <i class="fa-solid fa-bell"></i> Menú digital: Elegí y pedíselo al mozo
+     </p>
+ </div>
+
+ <!-- ── BANNER FIDELIDAD / APP DE PUNTOS ── -->
+ <div class="max-w-7xl mx-auto px-4 sm:px-8 mt-5">
+     <div class="mqb-banner-fidelidad">
+         <div class="mqb-banner-dots"></div>
+         <div class="mqb-banner-inner">
+
+             <!-- Izquierda: texto -->
+             <div class="mqb-banner-left">
+                 <div class="mqb-banner-eyebrow">
+                     <span class="mqb-banner-eyebrow-dot"></span>
+                     Más que Burgers App
+                 </div>
+                 <h2 class="mqb-banner-headline">
+                     <span class="mqb-banner-hl-size">DESCARGÁ</span>
+                     <span class="mqb-banner-hl-size accent">NUESTRA</span>
+                     <span class="mqb-banner-hl-size">APLICACIÓN</span>
+                 </h2>
+                 <p class="mqb-banner-subtitle">
+Creá tu cuenta con el mozo o en caja. Los canjes se realizan únicamente en caja.                 </p>
+             </div>
+
+             <!-- Divisor vertical (solo desktop) -->
+             <div class="mqb-banner-divider"></div>
+
+             <!-- QR (solo desktop, rellena el espacio donde antes iba el celular) -->
+             <div class="mqb-banner-qr">
+                 <img src="data:image/png;base64,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" alt="Código QR para acceder a la app">
+                 <span>Escaneá y descargá la app</span>
+             </div>
+
+             <!-- Divisor vertical (solo desktop, entre el QR y el CTA) -->
+             <div class="mqb-banner-divider"></div>
+
+             <!-- Mockup Celular (mobile) -->
+             <div class="mqb-phone-mockup">
+                 <div class="mqb-phone-screen">
+                     <img
+                         src="https://res.cloudinary.com/dl2tftoum/image/upload/v1782696253/sxmhvlzxtxs9ewvroetx.webp"
+                         alt="Captura de la app de puntos Más que Burgers"
+                         loading="lazy"
+                     >
+                 </div>
+             </div>
+
+             <!-- Derecha: CTA -->
+             <div class="mqb-banner-right">
+                 <a href="https://masqueburgers.com.ar" target="_blank" rel="noopener" class="mqb-banner-cta">
+                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#014926" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                     ¿Ya tenés cuenta?
+                 </a>
+                 <span class="mqb-banner-hint">Accedé desde acá · masqueburgers.com.ar</span>
+             </div>
+
+         </div>
+     </div>
+ </div>
+
+ <!-- ── CAROUSEL DE OFERTAS GLOBAL (siempre visible) ── -->
+ <div id="ofertas-carousel-global-wrapper" class="max-w-7xl mx-auto px-4 sm:px-8 mt-5 mb-0 animate-fade-in">
+     <div id="ofertas-carousel-global" class="relative overflow-hidden select-none rounded-[1.75rem]" style="background:#0a0f0d;">
+
+         <!-- Track -->
+         <div id="carousel-track-global" class="flex transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" style="will-change:transform;"></div>
+
+         <!-- Progress bar -->
+         <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-white/5 z-30">
+             <div id="carousel-progress" class="h-full bg-white/30 carousel-progress-bar" style="width:0%"></div>
+         </div>
+
+         <!-- Dots -->
+         <div id="carousel-dots-global" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 items-center"></div>
+
+         <!-- Flechas desktop -->
+         <button id="carousel-prev-global" aria-label="Anterior"
+             class="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all duration-200 border border-white/10">
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+         </button>
+         <button id="carousel-next-global" aria-label="Siguiente"
+             class="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all duration-200 border border-white/10">
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+         </button>
+     </div>
+ </div>
+
+ <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8">
+     <section id="menu-section" class="space-y-8">
+
+         <div class="flex items-center gap-4">
+             <h2 id="section-title" class="font-impact text-4xl text-mqb-blue tracking-tight uppercase italic">Burgers</h2>
+             <div class="h-px flex-1 bg-mqb-blue opacity-10"></div>
+         </div>
+
+         <div id="search-section">
+             <div class="relative flex items-center">
+                 <div class="absolute left-5 pointer-events-none">
+                     <i id="search-icon" class="fa-solid fa-magnifying-glass text-gray-400 text-base transition-colors duration-200"></i>
+                 </div>
+
+                 <input id="search-input" type="text" placeholder="¿Qué estás buscando?" class="w-full pl-14 pr-12 py-4 rounded-2xl bg-gray-50/70 text-sm font-medium text-mqb-dark" autocomplete="off" />
+
+                 <button id="clear-search" class="absolute right-5 text-gray-300 hover:text-mqb-blue" style="display: none;" aria-label="Limpiar búsqueda">
+                     <i class="fa-solid fa-circle-xmark text-lg"></i>
+                 </button>
+             </div>
+             <p id="search-results-count" class="mt-3 pl-1 text-xs font-black text-gray-400 uppercase tracking-widest" style="display: none;"></p>
+         </div>
+
+         <div id="no-results" class="hidden text-center py-16 space-y-3">
+             <div class="text-5xl">🍔</div>
+             <p class="font-impact text-3xl text-gray-300 uppercase italic tracking-wide">Sin resultados</p>
+             <p class="text-sm text-gray-400">Probá con otro término</p>
+         </div>
+
+         <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+     </section>
+ </main>
+
+<footer class="bg-gray-50 border-t border-gray-100 py-12 sm:py-16 px-4">
+ <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-center text-center md:text-left">
+     <div class="space-y-3">
+         <img src="https://imagedelivery.net/ut8GNCA1obOu4JnXrJ_J9Q/e7b59903-06e0-48f8-1bb1-71bd6da8a800/public" alt="Logo" class="w-16 sm:w-20 mx-auto md:mx-0 grayscale opacity-40">
+         <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold italic">Más sabor en cada bocado</p>
+     </div>
+     <div class="space-y-2">
+         <h5 class="font-bold text-sm uppercase tracking-widest text-mqb-blue">
+             <i class="fa-solid fa-location-dot mr-2"></i>Villa Ángela, Chaco
+         </h5>
+         <p class="text-sm text-gray-400 leading-relaxed">Vení a visitarnos y disfrutá de la mejor experiencia en hamburguesas.</p>
+     </div>
+     <div class="flex justify-center md:justify-end gap-4">
+         <a href="https://www.instagram.com/mas_queburgers" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow-sm flex items-center justify-center text-mqb-blue hover:bg-mqb-blue hover:text-white transition-all duration-300 transform hover:-translate-y-1">
+             <i class="fa-brands fa-instagram text-xl sm:text-2xl"></i>
+         </a>
+         <a href="https://wa.me/5493735468085" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow-sm flex items-center justify-center text-mqb-blue hover:bg-mqb-blue hover:text-white transition-all duration-300 transform hover:-translate-y-1">
+             <i class="fa-brands fa-whatsapp text-xl sm:text-2xl"></i>
+         </a>
+     </div>
+ </div>
+
+ <div class="max-w-7xl mx-auto mt-12 pt-6 border-t border-gray-200 text-center space-y-2">
+     <p class="text-xs text-gray-400 font-medium">
+         ¿Querés una web, menú digital o tienda online? 
+         <a href="https://wa.me/5493644539325?text=Hola%2C%20vi%20tu%20trabajo%20y%20me%20interesa%20una%20web" target="_blank" rel="noopener noreferrer" class="font-semibold text-mqb-blue hover:text-yellow-500 transition-colors duration-300">¡Hablemos!</a>
+     </p>
+     <p class="text-xs text-gray-400 font-medium">
+         Diseñado y desarrollado por 
+         <a href="https://hostara.vercel.app" target="_blank" rel="noopener noreferrer" class="font-semibold text-mqb-blue hover:text-yellow-500 transition-colors duration-300">Hostara</a>
+     </p>
+     <p class="text-xs text-gray-300 font-light">© 2026 Mas que Burgers — Todos los derechos reservados.</p>
+ </div>
+</footer>
+
+<!-- ── MODAL PROMO APP PUNTOS ── -->
+<div id="promo-modal" class="fixed inset-0 z-[11000] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300" onclick="closePromoModal()">
+    <div id="promo-modal-content" class="relative w-full max-w-sm bg-white rounded-[2rem] overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
+        
+        <!-- Imagen / Captura -->
+        <div class="h-56 bg-gradient-to-br from-mqb-blue to-[#01351c] relative flex items-center justify-center overflow-hidden">
+            <!-- Efecto de fondo sutil -->
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 16px 16px;"></div>
+            
+            <!-- REEMPLAZAR LINK DE LA IMAGEN ACÁ: Poné el link a la captura de tu App de Puntos en el "src" -->
+            <img src="https://imagedelivery.net/ut8GNCA1obOu4JnXrJ_J9Q/e7b59903-06e0-48f8-1bb1-71bd6da8a800/public" alt="Mas Que Burgers App" class="absolute z-10 h-44 object-contain drop-shadow-2xl opacity-60" id="promo-app-screenshot">
+            
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-20"></div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="p-6 text-center space-y-4 relative z-30 -mt-8 bg-white rounded-t-[2rem]">
+            <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-1"></div>
+            
+            <div class="inline-block bg-yellow-100 text-yellow-800 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest mb-1">
+                <i class="fa-solid fa-star mr-1"></i> Beneficio Exclusivo
+            </div>
+            
+            <h3 class="font-impact text-4xl text-mqb-blue uppercase leading-none tracking-tight">¡Sumá puntos<br>y ganá!</h3>
+            
+            <p class="text-sm text-gray-600 font-medium leading-relaxed">
+                ¿Ya tenés tu tarjeta virtual para acumular puntos y canjearlos por hamburguesas, bebidas o papas gratis? Pedila en la caja. 
+            </p>
+            
+            <div class="pt-4 space-y-3">
+
+                <!-- Aviso: se pide en caja -->
+                <div class="flex items-start gap-3 bg-mqb-blue/8 border border-mqb-blue/20 rounded-xl px-4 py-3 text-left">
+                    <span class="text-mqb-blue text-xl mt-0.5 shrink-0"><i class="fa-solid fa-store"></i></span>
+                    <p class="text-xs text-mqb-blue font-semibold leading-relaxed">
+                        La tarjeta se solicita <strong>en caja</strong> pedila ahora. ¡Es gratis y te damos tu cuenta al instante!
+                    </p>
+                </div>
+
+                <button onclick="closePromoModal()" class="block w-full py-4 rounded-xl bg-mqb-blue text-white font-black uppercase tracking-wider text-sm hover:bg-[#01351c] transition-colors shadow-lg shadow-mqb-blue/30 active:scale-95 transform">
+                    Entendido, ¡gracias!
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="image-modal" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4 transition-all duration-300 opacity-0" onclick="closeModal()">
+    <div class="relative w-full max-w-3xl transform transition-transform duration-300 scale-95" id="modal-container" onclick="event.stopPropagation()">
+        <div class="flex items-center justify-between mb-3 px-1">
+            <span id="modal-product-name" class="text-white font-black uppercase italic tracking-wide text-xl truncate pr-4" style="font-family:'Bebas Neue',sans-serif;"></span>
+            <button onclick="closeModal()" class="text-white/60 hover:text-white transition-colors flex-shrink-0 p-1">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+        </div>
+        <div class="overflow-hidden rounded-2xl bg-black" style="max-height:72vh;">
+            <img id="modal-img" src="" class="w-full h-auto max-h-[72vh] object-contain rounded-2xl shadow-2xl select-none transition-transform duration-200" style="transform-origin:center center;" ondragstart="return false">
+        </div>
+        <div class="flex items-center justify-center gap-4 mt-4" onclick="event.stopPropagation()">
+            <button id="modal-zoom-out" onclick="zoomOut()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors"><i class="fa-solid fa-minus text-sm"></i></button>
+            <span id="modal-zoom-value" class="text-white/70 text-xs font-black uppercase tracking-widest w-12 text-center select-none">100%</span>
+            <button id="modal-zoom-in" onclick="zoomIn()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors"><i class="fa-solid fa-plus text-sm"></i></button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+<script>
+(function () {
+    const searchInput = document.getElementById('search-input');
+    const clearBtn = document.getElementById('clear-search');
+    const resultsCount = document.getElementById('search-results-count');
+    const noResults = document.getElementById('no-results');
+    const productsGrid = document.getElementById('products-grid');
+    const searchIcon = document.getElementById('search-icon');
+
+    function normalize(str) { return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+    function getAllCards() { return Array.from(productsGrid.querySelectorAll('[data-name]')); }
+
+    function clearHighlights() {
+        productsGrid.querySelectorAll('mark').forEach(mark => { mark.replaceWith(document.createTextNode(mark.textContent)); });
+        productsGrid.normalize();
+    }
+
+    function highlightNode(el, query) {
+        if (!el || !query) return;
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+        const nodes = [];
+        let node;
+        while ((node = walker.nextNode())) nodes.push(node);
+
+        const normQuery = normalize(query);
+        nodes.forEach(textNode => {
+            const text = textNode.textContent;
+            const normText = normalize(text);
+            const idx = normText.indexOf(normQuery);
+            if (idx === -1) return;
+
+            const frag = document.createDocumentFragment();
+            frag.appendChild(document.createTextNode(text.slice(0, idx)));
+            const mark = document.createElement('mark');
+            mark.textContent = text.slice(idx, idx + query.length);
+            frag.appendChild(mark);
+            frag.appendChild(document.createTextNode(text.slice(idx + query.length)));
+            textNode.parentNode.replaceChild(frag, textNode);
+        });
+    }
+
+    function filterProducts(query) {
+        const cards = getAllCards();
+        if (!cards.length) return;
+        clearHighlights();
+        const trimmed = query.trim();
+        const norm = normalize(trimmed);
+        let visible = 0;
+        const catActiva = (typeof categoriaActiva !== 'undefined' ? categoriaActiva : '').toLowerCase();
+
+        cards.forEach(card => {
+            const name = normalize(card.getAttribute('data-name') || '');
+            const desc = normalize(card.getAttribute('data-desc') || '');
+            const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
+            const enCategoriaActiva = !catActiva || cardCat === catActiva;
+            const matches = enCategoriaActiva && (!norm || name.includes(norm) || desc.includes(norm));
+
+            card.style.display = matches ? '' : 'none';
+            if (matches) {
+                visible++;
+                if (norm) {
+                    highlightNode(card.querySelector('[data-card-title]'), trimmed);
+                    highlightNode(card.querySelector('[data-card-desc]'), trimmed);
+                }
+            }
+        });
+
+        noResults.classList.toggle('hidden', visible > 0 || !norm);
+        if (norm) {
+            resultsCount.style.display = 'block';
+            resultsCount.textContent = visible === 0 ? 'Sin resultados' : `${visible} producto${visible !== 1 ? 's' : ''} encontrado${visible !== 1 ? 's' : ''}`;
+        } else {
+            resultsCount.style.display = 'none';
+        }
+    }
+
+    searchInput.addEventListener('input', function () {
+        const val = this.value;
+        clearBtn.style.display = val.length ? 'flex' : 'none';
+        searchIcon.style.color = val.length ? '#014926' : '';
+        filterProducts(val);
+    });
+
+    clearBtn.addEventListener('click', function () {
+        searchInput.value = '';
+        clearBtn.style.display = 'none';
+        searchIcon.style.color = '';
+        filterProducts('');
+        searchInput.focus();
+    });
+
+    const observer = new MutationObserver(() => {
+        if (searchInput.value.trim()) filterProducts(searchInput.value);
+    });
+    observer.observe(productsGrid, { childList: true });
+})();
+</script>
+
+</body>
+</html>
