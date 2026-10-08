@@ -63,35 +63,35 @@ function renderTodo() {
         card.setAttribute('data-name',     producto.nombre);
         card.setAttribute('data-desc',     producto.descripcion);
         card.style.display = "none";
-        card.className = "group bg-white p-4 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-mqb-blue/20 transition-all duration-500";
+        card.className = "group relative flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-2xl hover:border-mqb-blue/30 transition-all duration-300";
 
         card.innerHTML = `
-            <div class="relative aspect-video rounded-[2rem] overflow-hidden bg-gray-100 mb-6 cursor-pointer" onclick="openModal('${producto.imagen}', '${nombreSafe}')">
+            <div class="relative aspect-[4/3] overflow-hidden bg-gray-100 cursor-pointer" onclick="openModal('${producto.imagen}', '${nombreSafe}')">
                 <img src="${imgUrl(producto.imagen, cat)}" alt="${producto.nombre}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none" style="background:linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);"></div>
                 ${producto.sumaPuntos ? `
-                <div class="absolute top-3 left-3 z-10">
-                    <span class="bg-[#014926] text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg flex items-center gap-1.5">
+                <div class="absolute top-3 right-3 z-10">
+                    <span class="bg-[#014926]/95 backdrop-blur-sm text-white text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-lg flex items-center gap-1.5">
                         <i class="fa-solid fa-star text-[9px]" style="color:#a3f0c4;"></i> Suma puntos
                     </span>
                 </div>` : ''}
-            </div>
-            <div class="px-2 space-y-3">
-                <div class="flex justify-between items-center">
-                    <h4 data-card-title class="font-impact text-2xl uppercase italic text-mqb-blue">${producto.nombre}</h4>
-                    ${producto.precioAnterior ? 
-                        `<div class="flex flex-col items-end leading-tight">
-                            <span class="text-sm text-gray-400 line-through font-impact">$${producto.precioAnterior.toLocaleString('es-AR')}</span>
+                <div class="absolute bottom-3 left-3 z-10">
+                    ${producto.precioAnterior ?
+                        `<div class="bg-white rounded-xl shadow-xl px-3.5 py-1.5 flex items-baseline gap-2">
                             <span class="font-impact text-2xl text-red-600 leading-none">$${producto.precio.toLocaleString('es-AR')}</span>
-                        </div>` 
-                        : 
-                        `<span class="font-impact text-2xl">$${producto.precio.toLocaleString('es-AR')}</span>`
+                            <span class="text-xs text-gray-400 line-through font-impact leading-none">$${producto.precioAnterior.toLocaleString('es-AR')}</span>
+                        </div>`
+                        :
+                        `<div class="bg-white rounded-xl shadow-xl px-3.5 py-1.5">
+                            <span class="font-impact text-2xl text-mqb-blue leading-none">$${producto.precio.toLocaleString('es-AR')}</span>
+                        </div>`
                     }
                 </div>
-                <p data-card-desc class="text-sm text-gray-700 font-medium leading-snug">${producto.descripcion}</p>
-                <div class="pt-2 border-t border-gray-50 flex justify-between items-center">
-                    <span class="text-[10px] font-black uppercase text-gray-300 tracking-widest italic">Mas que Burgers</span>
-                    <i class="fa-solid fa-burger text-gray-100 text-xl"></i>
-                </div>
+            </div>
+            <div class="flex-1 p-5 space-y-2.5">
+                <h4 data-card-title class="font-impact text-[1.7rem] uppercase tracking-wide leading-none text-mqb-dark">${producto.nombre}</h4>
+                <div class="h-1 w-8 rounded-full bg-mqb-blue group-hover:w-16 transition-all duration-300"></div>
+                <p data-card-desc class="text-sm text-gray-600 font-medium leading-relaxed">${producto.descripcion}</p>
             </div>
         `;
         fragment.appendChild(card);
