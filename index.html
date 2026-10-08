@@ -10,6 +10,7 @@
  <script src="https://cdn.tailwindcss.com"></script>
  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
  
  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TV9F5PGKSE"></script>
  <script>
@@ -48,6 +49,48 @@
         background-color: #014926 !important;
         color: white !important;
     }
+    /* ── Tabs de categorías ── */
+    #category-nav .category-btn:not(.sub-btn) {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 3px solid transparent !important;
+        border-radius: 0 !important;
+        color: #9ca3af !important;
+        padding: 8px 2px 7px !important;
+        flex-direction: column;
+        gap: 5px;
+        letter-spacing: 0.06em;
+        transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    #category-nav .category-btn:not(.sub-btn) .cat-icon {
+        font-size: 18px;
+        transition: transform 0.25s ease;
+    }
+    #category-nav .category-btn:not(.sub-btn):hover {
+        color: #0a0a0b !important;
+    }
+    #category-nav .category-btn:not(.sub-btn):hover .cat-icon {
+        transform: translateY(-2px);
+    }
+    #category-nav .category-btn:not(.sub-btn).active {
+        color: #014926 !important;
+        border-bottom-color: #014926 !important;
+        background: linear-gradient(to top, rgba(1, 73, 38, 0.07), transparent) !important;
+    }
+    @media (min-width: 768px) {
+        #category-nav .category-btn:not(.sub-btn) {
+            flex-direction: row;
+            gap: 8px;
+            padding: 10px 16px 9px !important;
+        }
+        #category-nav .category-btn:not(.sub-btn) .cat-icon { font-size: 14px; }
+    }
+    /* Submenú de bebidas */
+    #bebidas-dropdown .sub-btn.active {
+        background-color: rgba(1, 73, 38, 0.08) !important;
+        color: #014926 !important;
+    }
+
     /* Botón "Promos": color distintivo (ámbar) para diferenciarlo del resto */
     .promo-btn {
         background-color: rgba(245, 158, 11, 0.10) !important;
@@ -385,6 +428,231 @@
         }
     }
 
+    /* ── Carrusel hero (App + Nueva sucursal) ── */
+    #mqb-hero-carousel { touch-action: pan-y; border-radius: 20px; }
+    #mqb-hero-track { display: flex; }
+    .mqb-hero-slide { flex: 0 0 100%; min-width: 0; }
+
+    .mqb-hero-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: rgba(255,255,255,0.35);
+        border: none; padding: 0;
+        transition: all 0.3s ease; cursor: pointer; flex-shrink: 0;
+    }
+    .mqb-hero-dot.active {
+        background: #fff;
+        width: 20px; border-radius: 3px;
+    }
+    .mqb-hero-arrow {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: rgba(0,0,0,0.28);
+        backdrop-filter: blur(4px);
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,0.75);
+        border: 1px solid rgba(255,255,255,0.14);
+        transition: all 0.2s ease;
+    }
+    .mqb-hero-arrow:hover { color: #fff; background: rgba(0,0,0,0.45); }
+
+    /* Eyebrow ámbar (variante para la sucursal nueva) */
+    .mqb-banner-eyebrow.mqb-eyebrow-amber { color: #fde3ad; }
+    .mqb-banner-eyebrow-dot.mqb-dot-amber { background: #fbbf24; }
+
+
+    /* ══════════════════════════════════════════════════════════
+       SLIDE "NUEVA SUCURSAL" — estética alineada al diseño gráfico
+       (foto real del local + tipografía impactante + pin + cinta)
+       ══════════════════════════════════════════════════════════ */
+    /* ── Banner de bienvenida (Sáenz Peña) ── */
+    .mqb-bienvenida-card {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        isolation: isolate;
+        background: #084486;
+        display: flex;
+        flex-direction: column;
+    }
+    .mqb-bienvenida-card .mqb-banner-dots { z-index: 0; }
+    .mqb-bienvenida-media {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #052d5a;
+    }
+    .mqb-bienvenida-media img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    .mqb-bienvenida-fade {
+        position: absolute; inset: 0;
+        background: linear-gradient(to bottom, rgba(8,68,134,0) 40%, #084486 100%);
+        pointer-events: none;
+    }
+    .mqb-sucursal-content.mqb-bienvenida-content {
+        margin-top: -28px;
+        padding: 0 20px 62px;
+        max-width: none;
+    }
+    @media (min-width: 768px) {
+        .mqb-bienvenida-card { flex-direction: row; min-height: 320px; }
+        .mqb-sucursal-content.mqb-bienvenida-content {
+            margin-top: 0;
+            padding: 88px 24px 70px 40px;
+            width: 54%;
+            max-width: 600px;
+        }
+        .mqb-bienvenida-media {
+            position: absolute; top: 0; right: 0; bottom: 0;
+            width: 50%;
+            aspect-ratio: auto;
+        }
+        .mqb-bienvenida-fade {
+            background: linear-gradient(to right, #084486 0%, rgba(8,68,134,0) 38%);
+        }
+    }
+    .mqb-sucursal-logo {
+        position: absolute; top: 16px; left: 16px; z-index: 4;
+        width: 42px; height: 42px; border-radius: 50%;
+        background: #fff; padding: 5px;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .mqb-sucursal-logo img { width: 100%; height: 100%; object-fit: contain; }
+    @media (min-width: 641px) {
+        .mqb-sucursal-logo { width: 50px; height: 50px; top: 20px; left: 24px; }
+    }
+    .mqb-sucursal-content {
+        position: relative; z-index: 2;
+        padding: 66px 20px 52px;
+        max-width: 540px;
+    }
+    @media (min-width: 641px) {
+        .mqb-sucursal-content { padding: 82px 40px 60px 36px; }
+    }
+    .mqb-sucursal-headline {
+        font-family: 'Lilita One', 'Bebas Neue', sans-serif;
+        color: #fff;
+        line-height: 1;
+        letter-spacing: 0.02em;
+        font-weight: 400;
+        margin: 8px 0 12px;
+        text-shadow: 0 3px 14px rgba(0,0,0,0.35);
+    }
+    .mqb-sucursal-headline span {
+        display: block;
+        font-size: clamp(32px, 9vw, 54px);
+    }
+    .mqb-sucursal-headline .mqb-sucursal-outline {
+        color: transparent;
+        -webkit-text-stroke: 1.6px #ffffff;
+        text-stroke: 1.6px #ffffff;
+        text-shadow: none;
+        white-space: nowrap;
+    }
+    .mqb-sucursal-burger {
+        display: inline-block;
+        height: 0.86em;
+        width: auto;
+        vertical-align: -0.06em;
+        margin-left: 0.12em;
+        fill: none;
+        stroke: #ffffff;
+        stroke-width: 1.6px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+    .mqb-sucursal-burger * { vector-effect: non-scaling-stroke; }
+    /* Tipografía de apoyo (Nunito) */
+    .mqb-sucursal-content .mqb-banner-eyebrow {
+        font-family: 'Nunito', 'Inter', sans-serif;
+        font-weight: 800;
+        font-size: 11px;
+    }
+    .mqb-sucursal-content .mqb-banner-subtitle {
+        font-family: 'Nunito', 'Inter', sans-serif;
+        font-size: clamp(14px, 1.7vw, 16px);
+        line-height: 1.4;
+        margin-top: 6px;
+    }
+    .mqb-sucursal-lead {
+        display: block;
+        color: #fff;
+        font-weight: 800;
+    }
+    .mqb-sucursal-nb { display: inline-block; }
+    .mqb-sucursal-sub {
+        display: block;
+        color: #fde3ad;
+        font-weight: 700;
+        margin-top: 4px;
+    }
+    .mqb-sucursal-cta-row .mqb-banner-cta {
+        font-family: 'Nunito', 'Inter', sans-serif;
+        font-size: 14px;
+        font-weight: 900;
+    }
+    .mqb-sucursal-cta-row {
+        display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .mqb-sucursal-hint {
+        color: rgba(255,255,255,0.55);
+        font-size: 12px; font-weight: 700;
+        font-family: 'Nunito', 'Inter', sans-serif;
+        letter-spacing: 0.02em;
+    }
+    .mqb-sucursal-ribbon-wrap {
+        position: absolute; left: 0; right: 0; bottom: 12px; z-index: 3;
+        height: 28px; display: flex; align-items: center; justify-content: center;
+    }
+    .mqb-sucursal-ribbon {
+        position: absolute; left: -6%; right: -6%;
+        background: linear-gradient(90deg, #0a3d8f 0%, #072a63 100%);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        transform: rotate(-2deg);
+        padding: 7px 0;
+        display: flex; justify-content: center; align-items: center;
+        overflow: hidden; white-space: nowrap;
+    }
+    .mqb-sucursal-ribbon span {
+        color: #fff;
+        font-family: 'Lilita One', 'Inter', sans-serif;
+        font-weight: 400;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        flex-shrink: 0;
+        margin: 0 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .mqb-sucursal-ribbon span::after {
+        content: '•';
+        color: rgba(255,255,255,0.45);
+    }
+    .mqb-sucursal-ribbon span:last-child::after { content: ''; }
+    @media (min-width: 641px) {
+        .mqb-sucursal-ribbon { padding: 9px 0; }
+        .mqb-sucursal-ribbon span { font-size: 13px; margin: 0 16px; gap: 16px; }
+    }
+
+    .mqb-bienvenida-content .mqb-sucursal-headline span {
+        font-size: clamp(26px, 7vw, 44px);
+    }
+    .mqb-bienvenida-card .mqb-banner-cta { color: #084486; }
+    .mqb-bienvenida-card .mqb-banner-cta:hover { background: #dbe8f7; }
+    .mqb-bienvenida-card .mqb-sucursal-ribbon {
+        background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+    }
+    .mqb-bienvenida-card .mqb-sucursal-ribbon span { color: #3b2300; }
+    .mqb-bienvenida-card .mqb-sucursal-ribbon span::after { color: rgba(59,35,0,0.4); }
+    .mqb-bienvenida-card .mqb-sucursal-logo { z-index: 5; }
+
  </style>
 </head>
 <body class="bg-white text-mqb-dark font-sans selection:bg-mqb-blue selection:text-white">
@@ -404,23 +672,23 @@
 
         <nav id="category-nav" class="grid grid-cols-3 md:flex gap-2 w-full md:w-auto md:overflow-x-auto md:no-scrollbar pb-2 md:pb-0 items-stretch md:items-center">
              
-             <button class="category-btn active px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-gray-100 flex items-center justify-center text-center">Burgers</button>
+             <button class="category-btn active px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-gray-100 flex items-center justify-center text-center"><i class="fa-solid fa-burger cat-icon"></i><span>Burgers</span></button>
              
-             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center">Para compartir</button>
+             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center"><i class="fa-solid fa-users cat-icon"></i><span>Para compartir</span></button>
              
-             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center">Papas</button>
+             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center"><i class="fa-solid fa-utensils cat-icon"></i><span>Papas</span></button>
              
-             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center">Kids</button>
+             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center"><i class="fa-solid fa-child cat-icon"></i><span>Kids</span></button>
              
              <button id="bebidas-toggle" class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center gap-1 flex-shrink-0 text-center">
-                 Bebidas <i id="bebidas-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                 <i class="fa-solid fa-wine-glass cat-icon"></i><span class="flex items-center gap-1">Bebidas <i id="bebidas-chevron" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i></span>
              </button>
              
-             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center">Agregados</button>
+             <button class="category-btn bg-gray-50/50 px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border border-transparent text-gray-400 hover:bg-gray-100 flex items-center justify-center text-center"><i class="fa-solid fa-plus cat-icon"></i><span>Agregados</span></button>
              
-             <button class="category-btn promo-btn col-start-2 md:col-start-auto px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border flex items-center justify-center gap-1.5 text-center">
+             <!-- <button class="category-btn promo-btn col-start-2 md:col-start-auto px-1 md:px-5 py-2 rounded-2xl whitespace-normal md:whitespace-nowrap text-[11px] sm:text-xs leading-tight font-black uppercase border flex items-center justify-center gap-1.5 text-center">
                  <i class="fa-solid fa-tag text-[10px]"></i> Promos
-             </button>
+             </button> -->
              
          </nav>
          
@@ -437,60 +705,135 @@
      </p>
  </div>
 
- <!-- ── BANNER FIDELIDAD / APP DE PUNTOS ── -->
+ <!-- ── CARRUSEL HERO: APP DE PUNTOS + NUEVA SUCURSAL ── -->
  <div class="max-w-7xl mx-auto px-4 sm:px-8 mt-5">
-     <div class="mqb-banner-fidelidad">
-         <div class="mqb-banner-dots"></div>
-         <div class="mqb-banner-inner">
+     <div id="mqb-hero-carousel" class="relative overflow-hidden">
+         <div id="mqb-hero-track" class="flex transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" style="will-change:transform;">
 
-             <!-- Izquierda: texto -->
-             <div class="mqb-banner-left">
-                 <div class="mqb-banner-eyebrow">
-                     <span class="mqb-banner-eyebrow-dot"></span>
-                     Más que Burgers App
+             <!-- SLIDE 1: BIENVENIDA A LA SUCURSAL DE SÁENZ PEÑA -->
+             <div class="mqb-hero-slide">
+                 <div class="mqb-bienvenida-card">
+                    <div class="mqb-banner-dots"></div>
+
+                    <!-- Imagen del banner -->
+                    <div class="mqb-bienvenida-media">
+                        <img src="https://res.cloudinary.com/dloroyhev/image/upload/v1791422849/mjzibwmoygldotqbozws.webp" alt="Bienvenidos a la nueva sucursal de Más que Burgers en Sáenz Peña" decoding="async">
+                        <div class="mqb-bienvenida-fade"></div>
+                    </div>
+
+                    <!-- Logo insignia -->
+                    <div class="mqb-sucursal-logo">
+                        <img src="https://imagedelivery.net/ut8GNCA1obOu4JnXrJ_J9Q/e7b59903-06e0-48f8-1bb1-71bd6da8a800/public" alt="Más que Burgers">
+                    </div>
+
+                    <div class="mqb-sucursal-content mqb-bienvenida-content">
+                        <h2 class="mqb-sucursal-headline">
+                            <span>¡BIENVENIDOS</span>
+                            <span class="mqb-sucursal-outline">A MÁS QUE BURGERS! <svg class="mqb-sucursal-burger" aria-hidden="true" viewBox="0 0 64 61" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 25C6 10 19 3 32 3s26 7 26 22z"/>
+                                <path d="M21 13.5l3.5-1.6M32 9.5h3.6M42.5 13l3.2 1.8M27 19.5l3.4.8M38 19.8l3.4-.8"/>
+                                <path d="M4 32Q8 38 12 32T20 32T28 32T36 32T44 32T52 32T60 32"/>
+                                <rect x="5" y="39" width="54" height="8" rx="4"/>
+                                <path d="M6 51H58V53Q58 58 52 58H12Q6 58 6 53Z"/>
+                            </svg></span>
+                        </h2>
+                        <p class="mqb-banner-subtitle" style="max-width:460px;">
+                            <span class="mqb-sucursal-lead"><span class="mqb-sucursal-nb">Disfrutá la mejor experiencia</span> <span class="mqb-sucursal-nb">en hamburguesas. 🍔</span></span>
+                            <span class="mqb-sucursal-sub">Elegí tu burger y pedísela al mozo.</span>
+                        </p>
+                        <div class="mqb-sucursal-cta-row">
+                            <a href="https://www.instagram.com/mas_queburgers" target="_blank" rel="noopener" class="mqb-banner-cta">
+                                <i class="fa-brands fa-instagram" style="color:#084486;font-size:14px;"></i>
+                                Seguinos
+                            </a>
+                            <span class="mqb-sucursal-hint">@mas_queburgers</span>
+                        </div>
+                    </div>
+
+                    <!-- Cinta diagonal "Ya abrimos" -->
+                    <div class="mqb-sucursal-ribbon-wrap">
+                        <div class="mqb-sucursal-ribbon">
+                            <span>¡Ya abrimos!</span><span>¡Ya abrimos!</span><span>¡Ya abrimos!</span><span>¡Ya abrimos!</span><span>¡Ya abrimos!</span><span>¡Ya abrimos!</span><span>¡Ya abrimos!</span><span>¡Ya abrimos!</span>
+                        </div>
+                    </div>
                  </div>
-                 <h2 class="mqb-banner-headline">
-                     <span class="mqb-banner-hl-size">DESCARGÁ</span>
-                     <span class="mqb-banner-hl-size accent">NUESTRA</span>
-                     <span class="mqb-banner-hl-size">APLICACIÓN</span>
-                 </h2>
-                 <p class="mqb-banner-subtitle">
-Creá tu cuenta con el mozo o en caja. Los canjes se realizan únicamente en caja.                 </p>
              </div>
+            <!-- SLIDE 2: APP DE PUNTOS (comentado temporalmente, descomentar para reactivar) __
+             <div class="mqb-hero-slide">
+                 <div class="mqb-banner-fidelidad">
+             <div class="mqb-banner-dots"></div>
+             <div class="mqb-banner-inner">
 
-             <!-- Divisor vertical (solo desktop) -->
-             <div class="mqb-banner-divider"></div>
-
-             <!-- QR (solo desktop, rellena el espacio donde antes iba el celular) -->
-             <div class="mqb-banner-qr">
-                 <img src="data:image/png;base64,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" alt="Código QR para acceder a la app">
-                 <span>Escaneá y descargá la app</span>
-             </div>
-
-             <!-- Divisor vertical (solo desktop, entre el QR y el CTA) -->
-             <div class="mqb-banner-divider"></div>
-
-             <!-- Mockup Celular (mobile) -->
-             <div class="mqb-phone-mockup">
-                 <div class="mqb-phone-screen">
-                     <img
-                         src="https://res.cloudinary.com/dl2tftoum/image/upload/v1782696253/sxmhvlzxtxs9ewvroetx.webp"
-                         alt="Captura de la app de puntos Más que Burgers"
-                         loading="lazy"
-                     >
+                 __ Izquierda: texto __
+                 <div class="mqb-banner-left">
+                     <div class="mqb-banner-eyebrow">
+                         <span class="mqb-banner-eyebrow-dot"></span>
+                         Más que Burgers App
+                     </div>
+                     <h2 class="mqb-banner-headline">
+                         <span class="mqb-banner-hl-size">DESCARGÁ</span>
+                         <span class="mqb-banner-hl-size accent">NUESTRA</span>
+                         <span class="mqb-banner-hl-size">APLICACIÓN</span>
+                     </h2>
+                     <p class="mqb-banner-subtitle">
+    Creá tu cuenta con el mozo o en caja. Los canjes se realizan únicamente en caja.                 </p>
                  </div>
-             </div>
 
-             <!-- Derecha: CTA -->
-             <div class="mqb-banner-right">
-                 <a href="https://masqueburgers.com.ar" target="_blank" rel="noopener" class="mqb-banner-cta">
-                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#014926" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                     ¿Ya tenés cuenta?
-                 </a>
-                 <span class="mqb-banner-hint">Accedé desde acá · masqueburgers.com.ar</span>
-             </div>
+                 __ Divisor vertical (solo desktop) __
+                 <div class="mqb-banner-divider"></div>
 
+                 __ QR (solo desktop, rellena el espacio donde antes iba el celular) __
+                 <div class="mqb-banner-qr">
+                     <img src="data:image/png;base64,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" alt="Código QR para acceder a la app">
+                     <span>Escaneá y descargá la app</span>
+                 </div>
+
+                 __ Divisor vertical (solo desktop, entre el QR y el CTA) __
+                 <div class="mqb-banner-divider"></div>
+
+                 __ Mockup Celular (mobile) __
+                 <div class="mqb-phone-mockup">
+                     <div class="mqb-phone-screen">
+                         <img
+                             src="https://res.cloudinary.com/dl2tftoum/image/upload/v1782696253/sxmhvlzxtxs9ewvroetx.webp"
+                             alt="Captura de la app de puntos Más que Burgers"
+                             loading="lazy"
+                         >
+                     </div>
+                 </div>
+
+                 __ Derecha: CTA __
+                 <div class="mqb-banner-right">
+                     <a href="https://masqueburgers.com.ar" target="_blank" rel="noopener" class="mqb-banner-cta">
+                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#014926" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                         ¿Ya tenés cuenta?
+                     </a>
+                     <span class="mqb-banner-hint">Accedé desde acá · masqueburgers.com.ar</span>
+                 </div>
+
+             </div>
          </div>
+             </div>
+         -->
+         </div>
+
+         <!-- Dots -->
+         <!--
+         <div id="mqb-hero-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+             <button class="mqb-hero-dot active" data-slide="0" aria-label="Ir al slide 1"></button>
+             <button class="mqb-hero-dot" data-slide="1" aria-label="Ir al slide 2"></button>
+         </div>
+         -->
+
+         <!-- Flechas desktop -->
+         <!--
+         <button id="mqb-hero-prev" aria-label="Anterior" class="hidden md:flex mqb-hero-arrow absolute left-4 top-1/2 -translate-y-1/2 z-20">
+             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+         </button>
+         <button id="mqb-hero-next" aria-label="Siguiente" class="hidden md:flex mqb-hero-arrow absolute right-4 top-1/2 -translate-y-1/2 z-20">
+             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+         </button>
+         -->
      </div>
  </div>
 
@@ -559,13 +902,13 @@ Creá tu cuenta con el mozo o en caja. Los canjes se realizan únicamente en caj
  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-center text-center md:text-left">
      <div class="space-y-3">
          <img src="https://imagedelivery.net/ut8GNCA1obOu4JnXrJ_J9Q/e7b59903-06e0-48f8-1bb1-71bd6da8a800/public" alt="Logo" class="w-16 sm:w-20 mx-auto md:mx-0 grayscale opacity-40">
-         <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold italic">Más sabor en cada bocado</p>
+         <p class="text-[11px] text-gray-600 uppercase tracking-wider font-semibold italic">Más sabor en cada bocado</p>
      </div>
      <div class="space-y-2">
          <h5 class="font-bold text-sm uppercase tracking-widest text-mqb-blue">
-             <i class="fa-solid fa-location-dot mr-2"></i>Villa Ángela, Chaco
+             <i class="fa-solid fa-location-dot mr-2"></i>Villa Ángela - Sáenz Peña, Chaco
          </h5>
-         <p class="text-sm text-gray-400 leading-relaxed">Vení a visitarnos y disfrutá de la mejor experiencia en hamburguesas.</p>
+         <p class="text-sm text-gray-600 leading-relaxed">Vení a visitarnos y disfrutá de la mejor experiencia en hamburguesas.</p>
      </div>
      <div class="flex justify-center md:justify-end gap-4">
          <a href="https://www.instagram.com/mas_queburgers" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow-sm flex items-center justify-center text-mqb-blue hover:bg-mqb-blue hover:text-white transition-all duration-300 transform hover:-translate-y-1">
@@ -578,15 +921,15 @@ Creá tu cuenta con el mozo o en caja. Los canjes se realizan únicamente en caj
  </div>
 
  <div class="max-w-7xl mx-auto mt-12 pt-6 border-t border-gray-200 text-center space-y-2">
-     <p class="text-xs text-gray-400 font-medium">
+     <p class="text-xs text-gray-600 font-medium">
          ¿Querés una web, menú digital o tienda online? 
          <a href="https://wa.me/5493644539325?text=Hola%2C%20vi%20tu%20trabajo%20y%20me%20interesa%20una%20web" target="_blank" rel="noopener noreferrer" class="font-semibold text-mqb-blue hover:text-yellow-500 transition-colors duration-300">¡Hablemos!</a>
      </p>
-     <p class="text-xs text-gray-400 font-medium">
+     <p class="text-xs text-gray-600 font-medium">
          Diseñado y desarrollado por 
          <a href="https://hostara.vercel.app" target="_blank" rel="noopener noreferrer" class="font-semibold text-mqb-blue hover:text-yellow-500 transition-colors duration-300">Hostara</a>
      </p>
-     <p class="text-xs text-gray-300 font-light">© 2026 Mas que Burgers — Todos los derechos reservados.</p>
+     <p class="text-xs text-gray-500 font-light">© 2026 Mas que Burgers — Todos los derechos reservados.</p>
  </div>
 </footer>
 
@@ -753,6 +1096,53 @@ Creá tu cuenta con el mozo o en caja. Los canjes se realizan únicamente en caj
         if (searchInput.value.trim()) filterProducts(searchInput.value);
     });
     observer.observe(productsGrid, { childList: true });
+})();
+</script>
+
+<script>
+(function () {
+    const track = document.getElementById('mqb-hero-track');
+    if (!track) return;
+    const wrapper = document.getElementById('mqb-hero-carousel');
+    const slides = track.querySelectorAll('.mqb-hero-slide');
+    const dots = document.querySelectorAll('#mqb-hero-dots .mqb-hero-dot');
+    const prevBtn = document.getElementById('mqb-hero-prev');
+    const nextBtn = document.getElementById('mqb-hero-next');
+    const total = slides.length;
+    let current = 0;
+    let timer = null;
+
+    function goTo(index) {
+        current = (index + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+    }
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+    function restart() { clearInterval(timer); timer = setInterval(next, 18000); }
+
+    dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(i); restart(); });
+    });
+    if (nextBtn) nextBtn.addEventListener('click', function () { next(); restart(); });
+    if (prevBtn) prevBtn.addEventListener('click', function () { prev(); restart(); });
+
+    // Swipe táctil
+    let startX = 0, dragging = false;
+    wrapper.addEventListener('touchstart', function (e) {
+        startX = e.touches[0].clientX;
+        dragging = true;
+    }, { passive: true });
+    wrapper.addEventListener('touchend', function (e) {
+        if (!dragging) return;
+        const diff = e.changedTouches[0].clientX - startX;
+        if (diff > 40) prev();
+        else if (diff < -40) next();
+        dragging = false;
+        restart();
+    });
+
+    restart();
 })();
 </script>
 
