@@ -125,14 +125,6 @@
   },
  
   {
-    "nombre": "Pollo frito 12 piezas",
-    "descripcion": "Doce piezas de pollo frito, un toping de mayonesa, un toping de ketchup y papas.",
-    "precio": 32000,
-    "categoria": "Para compartir",
-    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771976003/tosl2skyxt3rpuyaa1ux.webp",
-    "destacado": false
-  },
-  {
     "nombre": "Pollo frito 3 piezas",
     "descripcion": "Tres piezas de pollo frito, un toping de mayonesa y papas.",
     "precio": 8000,
