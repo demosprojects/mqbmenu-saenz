@@ -40,6 +40,11 @@
  <style>
     :root { color-scheme: only light !important; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
+
+    /* Header: se oculta al bajar y reaparece al subir */
+    .mqb-header { transition: transform 0.3s ease; }
+    .mqb-header.header-oculto { transform: translateY(-100%); }
+    @media (prefers-reduced-motion: reduce) { .mqb-header { transition: none; } }
     .bg-pattern {
         background-image: radial-gradient(#014926 0.5px, transparent 0.5px);
         background-size: 30px 30px;
@@ -659,7 +664,7 @@
 
  <div class="fixed inset-0 bg-pattern -z-10"></div>
 
- <header class="sticky top-0 z-50 bg-white/95 border-b border-gray-100" style="will-change: transform;">
+ <header class="mqb-header sticky top-0 z-50 bg-white/95 border-b border-gray-100" style="will-change: transform;">
      <div class="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
          <div class="flex items-center gap-4">
              <img src="https://imagedelivery.net/ut8GNCA1obOu4JnXrJ_J9Q/e7b59903-06e0-48f8-1bb1-71bd6da8a800/public" 
