@@ -386,8 +386,48 @@ function mostrarCategoria(categoria) {
     marcarActivo(catLower);
     spyPausadoHasta = Date.now() + 900;
 
-    const y = target.getBoundingClientRect().top + window.scrollY - alturaHeader() - 12;
+    // Bajando: el header se oculta, así que no hace falta dejarle lugar.
+    // Subiendo: el header aparece, así que dejamos su altura libre arriba.
+    const objetivoY = target.getBoundingClientRect().top + window.scrollY;
+    const bajando   = objetivoY > window.scrollY;
+    setHeaderOculto(bajando);
+    lastScrollY = window.scrollY;
+
+    const y = objetivoY - (bajando ? 0 : alturaHeader()) - 12;
     window.scrollTo({ top: y, behavior: 'smooth' });
+}
+
+// ─────────────────────────────────────────────
+// Header: se oculta al bajar, aparece al subir
+// ─────────────────────────────────────────────
+let headerOculto = false;
+let lastScrollY  = 0;
+
+function setHeaderOculto(valor) {
+    if (headerOculto === valor) return;
+    headerOculto = valor;
+    const header = document.querySelector('header');
+    if (header) header.classList.toggle('header-oculto', valor);
+    if (valor) closeBebidasDropdown();   // el desplegable no puede quedar flotando sin header
+}
+
+function actualizarHeader() {
+    const y = Math.max(0, window.scrollY);   // evita valores negativos (rebote iOS)
+
+    // Durante un scroll programático (click en un botón) no tocamos el header
+    if (Date.now() < spyPausadoHasta) { lastScrollY = y; return; }
+
+    const dy = y - lastScrollY;
+    if (y <= alturaHeader()) {
+        setHeaderOculto(false);               // arriba de todo: siempre visible
+        lastScrollY = y;
+    } else if (dy > 6) {
+        setHeaderOculto(true);                // bajando
+        lastScrollY = y;
+    } else if (dy < -6) {
+        setHeaderOculto(false);               // subiendo
+        lastScrollY = y;
+    }
 }
 
 // ─────────────────────────────────────────────
@@ -429,7 +469,7 @@ function actualizarSpy() {
         .filter(sec => sec.style.display !== 'none');
     if (!secciones.length) return;
 
-    const umbral = alturaHeader() + 60;
+    const umbral = (headerOculto ? 0 : alturaHeader()) + 60;
     let actual = secciones[0];
     for (const sec of secciones) {
         if (sec.getBoundingClientRect().top <= umbral) actual = sec;
@@ -448,13 +488,14 @@ function initScrollSpy() {
     const onScroll = () => {
         if (ticking) return;
         ticking = true;
-        requestAnimationFrame(() => { actualizarSpy(); ticking = false; });
+        requestAnimationFrame(() => { actualizarHeader(); actualizarSpy(); ticking = false; });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     // Cuando termina un scroll programático, re-sincronizamos
-    window.addEventListener('scrollend', () => { spyPausadoHasta = 0; actualizarSpy(); });
+    window.addEventListener('scrollend', () => { spyPausadoHasta = 0; lastScrollY = Math.max(0, window.scrollY); actualizarSpy(); });
     // Y por si el navegador no soporta scrollend:
+    lastScrollY = Math.max(0, window.scrollY);
     setTimeout(actualizarSpy, 50);
 }
 
