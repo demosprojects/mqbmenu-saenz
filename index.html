@@ -868,7 +868,7 @@
      <section id="menu-section" class="space-y-8">
 
          <div class="flex items-center gap-4">
-             <h2 id="section-title" class="font-impact text-4xl text-mqb-blue tracking-tight uppercase italic">Burgers</h2>
+             <h2 id="section-title" class="font-impact text-4xl text-mqb-blue tracking-tight uppercase italic">Menú</h2>
              <div class="h-px flex-1 bg-mqb-blue opacity-10"></div>
          </div>
 
@@ -893,7 +893,7 @@
              <p class="text-sm text-gray-400">Probá con otro término</p>
          </div>
 
-         <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+         <div id="products-grid" class="space-y-12"></div>
 
      </section>
  </main>
@@ -1049,14 +1049,13 @@
         const trimmed = query.trim();
         const norm = normalize(trimmed);
         let visible = 0;
-        const catActiva = (typeof categoriaActiva !== 'undefined' ? categoriaActiva : '').toLowerCase();
 
         cards.forEach(card => {
             const name = normalize(card.getAttribute('data-name') || '');
             const desc = normalize(card.getAttribute('data-desc') || '');
-            const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
-            const enCategoriaActiva = !catActiva || cardCat === catActiva;
-            const matches = enCategoriaActiva && (!norm || name.includes(norm) || desc.includes(norm));
+            const sec  = card.closest('section');
+            const enVista = !!sec && sec.dataset.activa === 'true';
+            const matches = enVista && (!norm || name.includes(norm) || desc.includes(norm));
 
             card.style.display = matches ? '' : 'none';
             if (matches) {
@@ -1066,6 +1065,13 @@
                     highlightNode(card.querySelector('[data-card-desc]'), trimmed);
                 }
             }
+        });
+
+        // Mostrar solo las secciones activas que tengan resultados
+        productsGrid.querySelectorAll('section[data-group]').forEach(sec => {
+            if (sec.dataset.activa !== 'true') { sec.style.display = 'none'; return; }
+            const hay = Array.from(sec.querySelectorAll('[data-name]')).some(c => c.style.display !== 'none');
+            sec.style.display = hay ? '' : 'none';
         });
 
         noResults.classList.toggle('hidden', visible > 0 || !norm);
