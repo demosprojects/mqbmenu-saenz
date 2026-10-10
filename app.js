@@ -1,6 +1,10 @@
 let menuData = [];
 let categoriaActiva = "";
 
+// Orden de las secciones en la página (mismo orden que el header)
+const ORDEN_SECCIONES = ['Burgers', 'Para compartir', 'Papas', 'Kids', 'Sin alcohol', 'Con alcohol', 'Agregados'];
+const CATS_BEBIDAS = ['sin alcohol', 'con alcohol'];
+
 const menuGrid        = document.getElementById('products-grid');
 const sectionTitle    = document.getElementById('section-title');
 
@@ -16,7 +20,7 @@ async function cargarDatos() {
         menuData = dataRaw.filter(producto => producto.disponible !== false);
         
         renderTodo();
-        mostrarCategoria("Burgers");
+        initScrollSpy();
     } catch (error) {
         console.error("Error cargando el menú:", error);
     }
@@ -51,65 +55,77 @@ function renderTodo() {
     // ── Construir slides del carousel ──
     construirCarousel(destacadosPorCategoria);
 
-    // Cards normales (no destacadas)
-    const fragment = document.createDocumentFragment();
+    // Cards normales (no destacadas) → una sección por categoría
+    const categoriasOrdenadas = [
+        ...ORDEN_SECCIONES.filter(c => categorias.some(x => x.toLowerCase() === c.toLowerCase())),
+        ...categorias.filter(c => !ORDEN_SECCIONES.some(x => x.toLowerCase() === c.toLowerCase()))
+    ];
 
-    menuData.filter(p => !p.destacado).forEach(producto => {
-        const cat        = producto.categoria;
-        const card       = document.createElement('div');
-        const nombreSafe = producto.nombre.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    categoriasOrdenadas.forEach(cat => {
+        const catLower = cat.toLowerCase();
+        const productos = menuData.filter(p => !p.destacado && p.categoria.toLowerCase() === catLower);
+        if (!productos.length) return;
 
-        card.setAttribute('data-category', cat.toLowerCase());
-        card.setAttribute('data-name',     producto.nombre);
-        card.setAttribute('data-desc',     producto.descripcion);
-        card.style.display = "none";
-        card.className = "group relative flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-2xl hover:border-mqb-blue/30 transition-all duration-300";
+        const esBebida = CATS_BEBIDAS.includes(catLower);
 
-        card.innerHTML = `
-            <div class="relative aspect-[4/3] overflow-hidden bg-gray-100 cursor-pointer" onclick="openModal('${producto.imagen}', '${nombreSafe}')">
-                <img src="${imgUrl(producto.imagen, cat)}" alt="${producto.nombre}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                <div class="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none" style="background:linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);"></div>
-                ${producto.sumaPuntos ? `
-                <div class="absolute top-3 right-3 z-10">
-                    <span class="bg-[#014926]/95 backdrop-blur-sm text-white text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-lg flex items-center gap-1.5">
-                        <i class="fa-solid fa-star text-[9px]" style="color:#a3f0c4;"></i> Suma puntos
-                    </span>
-                </div>` : ''}
-                <div class="absolute bottom-3 left-3 z-10">
-                    ${producto.precioAnterior ?
-                        `<div class="bg-white rounded-xl shadow-xl px-3.5 py-1.5 flex items-baseline gap-2">
-                            <span class="font-impact text-2xl text-red-600 leading-none">$${producto.precio.toLocaleString('es-AR')}</span>
-                            <span class="text-xs text-gray-400 line-through font-impact leading-none">$${producto.precioAnterior.toLocaleString('es-AR')}</span>
-                        </div>`
-                        :
-                        `<div class="bg-white rounded-xl shadow-xl px-3.5 py-1.5">
-                            <span class="font-impact text-2xl text-mqb-blue leading-none">$${producto.precio.toLocaleString('es-AR')}</span>
-                        </div>`
-                    }
+        const sec = document.createElement('section');
+        sec.dataset.cat    = catLower;
+        sec.dataset.group  = esBebida ? 'bebidas' : 'comida';
+        sec.dataset.activa = 'true';   // todas las secciones forman parte de la página
+
+        const titulo = esBebida ? `Bebidas · ${cat}` : cat;
+
+        sec.innerHTML = `
+            <div class="flex items-center gap-4 mb-6">
+                <h3 class="font-impact text-3xl text-mqb-blue tracking-tight uppercase italic">${titulo}</h3>
+                <div class="h-px flex-1 bg-mqb-blue opacity-10"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>`;
+
+        const grid = sec.querySelector('.grid');
+
+        productos.forEach(producto => {
+            const card       = document.createElement('div');
+            const nombreSafe = producto.nombre.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+
+            card.setAttribute('data-category', catLower);
+            card.setAttribute('data-name',     producto.nombre);
+            card.setAttribute('data-desc',     producto.descripcion);
+            card.className = "group relative flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-2xl hover:border-mqb-blue/30 transition-all duration-300";
+
+            card.innerHTML = `
+                <div class="relative aspect-[4/3] overflow-hidden bg-gray-100 cursor-pointer" onclick="openModal('${producto.imagen}', '${nombreSafe}')">
+                    <img src="${imgUrl(producto.imagen, cat)}" alt="${producto.nombre}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none" style="background:linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);"></div>
+                    ${producto.sumaPuntos ? `
+                    <div class="absolute top-3 right-3 z-10">
+                        <span class="bg-[#014926]/95 backdrop-blur-sm text-white text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-lg flex items-center gap-1.5">
+                            <i class="fa-solid fa-star text-[9px]" style="color:#a3f0c4;"></i> Suma puntos
+                        </span>
+                    </div>` : ''}
+                    <div class="absolute bottom-3 left-3 z-10">
+                        ${producto.precioAnterior ?
+                            `<div class="bg-white rounded-xl shadow-xl px-3.5 py-1.5 flex items-baseline gap-2">
+                                <span class="font-impact text-2xl text-red-600 leading-none">$${producto.precio.toLocaleString('es-AR')}</span>
+                                <span class="text-xs text-gray-400 line-through font-impact leading-none">$${producto.precioAnterior.toLocaleString('es-AR')}</span>
+                            </div>`
+                            :
+                            `<div class="bg-white rounded-xl shadow-xl px-3.5 py-1.5">
+                                <span class="font-impact text-2xl text-mqb-blue leading-none">$${producto.precio.toLocaleString('es-AR')}</span>
+                            </div>`
+                        }
+                    </div>
                 </div>
-            </div>
-            <div class="flex-1 p-5 space-y-2.5">
-                <h4 data-card-title class="font-impact text-[1.7rem] uppercase tracking-wide leading-none text-mqb-dark">${producto.nombre}</h4>
-                <div class="h-1 w-8 rounded-full bg-mqb-blue group-hover:w-16 transition-all duration-300"></div>
-                <p data-card-desc class="text-sm text-gray-600 font-medium leading-relaxed">${producto.descripcion}</p>
-            </div>
-        `;
-        fragment.appendChild(card);
-    });
+                <div class="flex-1 p-5 space-y-2.5">
+                    <h4 data-card-title class="font-impact text-[1.7rem] uppercase tracking-wide leading-none text-mqb-dark">${producto.nombre}</h4>
+                    <div class="h-1 w-8 rounded-full bg-mqb-blue group-hover:w-16 transition-all duration-300"></div>
+                    <p data-card-desc class="text-sm text-gray-600 font-medium leading-relaxed">${producto.descripcion}</p>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
 
-    menuGrid.appendChild(fragment);
-
-    // Mensajes "próximamente"
-    categorias.forEach(cat => {
-        const tieneProductos = menuData.some(p => p.categoria.toLowerCase() === cat.toLowerCase());
-        if (tieneProductos) return;
-
-        const msg = document.createElement('p');
-        msg.setAttribute('data-empty-cat', cat.toLowerCase());
-        msg.className = "col-span-full text-center text-gray-400 py-20 italic font-light";
-        msg.style.display = "none";
-        msg.innerText = "Próximamente más opciones en esta categoría...";
-        menuGrid.appendChild(msg);
+        menuGrid.appendChild(sec);
     });
 }
 
@@ -350,33 +366,96 @@ function montarCarouselGlobal(grupos) {
 // ─────────────────────────────────────────────
 // Cambio de categoría: show/hide + scroll arriba
 // ─────────────────────────────────────────────
+function alturaHeader() {
+    return document.querySelector('header')?.offsetHeight ?? 72;
+}
+
 function mostrarCategoria(categoria) {
-    if (categoriaActiva.toLowerCase() === categoria.toLowerCase()) return;
-    categoriaActiva = categoria;
-
-    sectionTitle.innerText = categoria;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // Resetear buscador
-    const searchInput  = document.getElementById('search-input');
-    const clearBtn     = document.getElementById('clear-search');
-    const resultsCount = document.getElementById('search-results-count');
-    const noResults    = document.getElementById('no-results');
-    if (searchInput)   searchInput.value = '';
-    if (clearBtn)      clearBtn.style.display = 'none';
-    if (resultsCount)  resultsCount.style.display = 'none';
-    if (noResults)     noResults.classList.add('hidden');
-
-    // Cards
     const catLower = categoria.toLowerCase();
-    menuGrid.querySelectorAll('[data-category]').forEach(card => {
-        card.style.display = card.dataset.category === catLower ? "" : "none";
-    });
+    const target = menuGrid.querySelector(`section[data-cat="${catLower}"]`);
+    if (!target) return;
 
-    // Mensajes vacíos
-    menuGrid.querySelectorAll('[data-empty-cat]').forEach(msg => {
-        msg.style.display = msg.dataset.emptyCat === catLower ? "" : "none";
-    });
+    // Si hay búsqueda activa, la limpiamos para que la sección sea visible
+    const searchInput = document.getElementById('search-input');
+    if (searchInput && searchInput.value) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+    }
+
+    // Marcamos el botón ya y pausamos el scroll-spy mientras dura la animación
+    marcarActivo(catLower);
+    spyPausadoHasta = Date.now() + 900;
+
+    const y = target.getBoundingClientRect().top + window.scrollY - alturaHeader() - 12;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+}
+
+// ─────────────────────────────────────────────
+// Scroll-spy: marca en el header la sección visible
+// ─────────────────────────────────────────────
+let spyPausadoHasta = 0;
+let catMarcada = null;
+const botonesPorCat = {};
+
+function marcarActivo(catLower) {
+    if (catMarcada === catLower) return;
+    catMarcada = catLower;
+
+    document.querySelectorAll('#category-nav .category-btn.active, #bebidas-dropdown .sub-btn.active')
+        .forEach(b => b.classList.remove('active'));
+
+    const esBebida = CATS_BEBIDAS.includes(catLower);
+    const btn = botonesPorCat[catLower];
+    if (btn) btn.classList.add('active');
+    // Si es una bebida, el botón "Bebidas" del header también queda marcado
+    if (esBebida) {
+        const toggle = document.getElementById('bebidas-toggle');
+        if (toggle) toggle.classList.add('active');
+    }
+
+    // Desktop: mantener visible el botón activo dentro del nav con scroll horizontal
+    const nav = document.getElementById('category-nav');
+    const visible = esBebida ? document.getElementById('bebidas-toggle') : btn;
+    if (nav && visible && nav.scrollWidth > nav.clientWidth) {
+        const left = visible.offsetLeft - (nav.clientWidth - visible.offsetWidth) / 2;
+        nav.scrollTo({ left, behavior: 'smooth' });
+    }
+}
+
+function actualizarSpy() {
+    if (Date.now() < spyPausadoHasta) return;
+
+    const secciones = Array.from(menuGrid.querySelectorAll('section[data-cat]'))
+        .filter(sec => sec.style.display !== 'none');
+    if (!secciones.length) return;
+
+    const umbral = alturaHeader() + 60;
+    let actual = secciones[0];
+    for (const sec of secciones) {
+        if (sec.getBoundingClientRect().top <= umbral) actual = sec;
+        else break;
+    }
+
+    // Al llegar al final de la página, la última sección queda marcada
+    const alFinal = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    if (alFinal) actual = secciones[secciones.length - 1];
+
+    marcarActivo(actual.dataset.cat);
+}
+
+function initScrollSpy() {
+    let ticking = false;
+    const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { actualizarSpy(); ticking = false; });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    // Cuando termina un scroll programático, re-sincronizamos
+    window.addEventListener('scrollend', () => { spyPausadoHasta = 0; actualizarSpy(); });
+    // Y por si el navegador no soporta scrollend:
+    setTimeout(actualizarSpy, 50);
 }
 
 // ─────────────────────────────────────────────
@@ -398,21 +477,6 @@ function imgUrlFeatured(url, categoria) {
     if (!url || !url.includes('res.cloudinary.com')) return url;
     if (CATS_SIN_OPTIMIZAR.includes((categoria || '').toLowerCase())) return url;
     return url.replace('/upload/', '/upload/w_900,q_auto,f_auto/');
-}
-
-// ─────────────────────────────────────────────
-// Activa visualmente un botón
-// ─────────────────────────────────────────────
-let botonActivo = null;
-
-function activarBoton(btn) {
-    if (botonActivo && botonActivo !== btn) {
-        botonActivo.classList.remove('active');
-        botonActivo.classList.add('bg-gray-50/50', 'text-gray-400', 'border-transparent');
-    }
-    btn.classList.add('active');
-    btn.classList.remove('bg-gray-50/50', 'text-gray-400', 'border-transparent');
-    botonActivo = btn;
 }
 
 // ─────────────────────────────────────────────
@@ -478,38 +542,22 @@ function initDropdown() {
 }
 
 // ─────────────────────────────────────────────
-// Scroll automático al título en mobile
-// ─────────────────────────────────────────────
-function scrollToSectionTitleMobile() {
-    if (window.innerWidth >= 768) return;
-    const title = document.getElementById('section-title');
-    if (!title) return;
-    setTimeout(() => {
-        const headerH = document.querySelector('header')?.offsetHeight ?? 72;
-        const y = title.getBoundingClientRect().top + window.scrollY - headerH - 12;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-    }, 60);
-}
-
-// ─────────────────────────────────────────────
 // Listeners de categorías
 // ─────────────────────────────────────────────
 function initCategoryButtons() {
     document.querySelectorAll('#category-nav .category-btn:not(.sub-btn)').forEach(btn => {
         if (btn.id === 'bebidas-toggle') return;
-        btn.addEventListener('click', () => {
-            activarBoton(btn);
-            mostrarCategoria(btn.innerText.trim());
-            scrollToSectionTitleMobile();
-        });
+        const cat = btn.textContent.trim().toLowerCase();
+        botonesPorCat[cat] = btn;
+        btn.addEventListener('click', () => mostrarCategoria(btn.textContent.trim()));
     });
 
     document.querySelectorAll('#bebidas-dropdown .sub-btn').forEach(btn => {
+        const cat = btn.textContent.trim().toLowerCase();
+        botonesPorCat[cat] = btn;
         btn.addEventListener('click', () => {
             closeBebidasDropdown();
-            activarBoton(btn);
-            mostrarCategoria(btn.innerText.trim());
-            scrollToSectionTitleMobile();
+            mostrarCategoria(btn.textContent.trim());
         });
     });
 }
@@ -652,7 +700,6 @@ window.closePromoModal = () => {
 // Init
 // ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-    botonActivo = document.querySelector('.category-btn.active') || null;
     initDropdown();
     initCategoryButtons();
     cargarDatos();
