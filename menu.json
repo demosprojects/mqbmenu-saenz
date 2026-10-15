@@ -419,11 +419,11 @@
   {
     "nombre": "Fanta 1,5L",
     "descripcion": "Fanta de 1,5L",
-    "precio": 4600,
+    "precio": 5000,
     "categoria": "Sin alcohol",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771483550/fscwuc82do5op74uzuvb.webp",
     "destacado": false,
-    "precioAnterior": 5000
+    
   },
   {
     "nombre": "Fanta de manzana 2.5L",
