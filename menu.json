@@ -114,15 +114,6 @@
     "sumaPuntos": false
   },
 
-
-  {
-    "nombre": "Miniburgers",
-    "descripcion": "Miniburgers, papa y aderezos (mayonesa y ketchup)",
-    "precio": 29900,
-    "categoria": "Para compartir",
-    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771212698/q2gcsdytm9uu3akerwuf.webp",
-    "destacado": false
-  },
  
   {
     "nombre": "Pollo frito 3 piezas",
@@ -218,7 +209,7 @@
   {
     "nombre": "Sobre de papas",
     "descripcion": "Sobre de papas",
-    "precio": 1700,
+    "precio": 2500,
     "categoria": "Papas",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1779418342/alvc8aqdqk3eyflxizmo.webp",
     "destacado": false,
@@ -244,7 +235,7 @@
   {
     "nombre": "Cajita Toy Story",
     "descripcion": "Mini hamburguesa, sobre de papas, lata de Coca 220ml, libro para colorear ",
-    "precio": 12900,
+    "precio": 14500,
     "categoria": "Kids",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031721/ad0rpe6y5y4vueq8uwx8.webp",
     "destacado": false,
@@ -253,7 +244,7 @@
   {
     "nombre": "Cajita Spiderman",
     "descripcion": "Mini hamburguesa, sobre de papas, lata de Coca 220ml, libro para colorear ",
-    "precio": 12900,
+    "precio": 14500,
     "categoria": "Kids",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031762/crmny5tztxdn8d2b9uio.webp",
     "destacado": false,
@@ -262,7 +253,7 @@
   {
     "nombre": "Cajita Paw Patrol - Dinosaurios",
     "descripcion": "Mini hamburguesa, sobre de papas, lata de Coca 220ml, libro para colorear ",
-    "precio": 12900,
+    "precio": 14500,
     "categoria": "Kids",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031802/fvybxgemfmzpwfmiahxy.webp",
     "destacado": false,
@@ -271,7 +262,7 @@
   {
     "nombre": "Cajita Paw Patrol",
     "descripcion": "Mini hamburguesa, sobre de papas, lata de Coca 220ml, libro para colorear ",
-    "precio": 12900,
+    "precio": 14500,
     "categoria": "Kids",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031876/ilc8xiqcfdukgxn163zr.webp",
     "destacado": false,
@@ -280,7 +271,7 @@
  {
     "nombre": "Cajita Minions",
     "descripcion": "Mini hamburguesa, sobre de papas, lata de Coca 220ml, libro para colorear ",
-    "precio": 12900,
+    "precio": 14500,
     "categoria": "Kids",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031906/ez6xlqqv1wgzm4nrvowu.webp",
     "destacado": false,
