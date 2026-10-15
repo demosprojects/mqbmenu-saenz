@@ -242,38 +242,47 @@
     "destacado": false
   },
   {
-    "nombre": "Cajita Hoppers",
+    "nombre": "Cajita Toy Story",
     "descripcion": "Mini cheese, sobre de papas, lata de Coca 220ml, libro para colorear ",
     "precio": 12900,
     "categoria": "Kids",
-    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1778889753/uyfqqtfvsnhnpbf4sbhq.webp",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031721/ad0rpe6y5y4vueq8uwx8.webp",
     "destacado": false,
     "disponible": true
   },
   {
-    "nombre": "Cajita Kpop Demon Hunters",
+    "nombre": "Cajita Spiderman",
     "descripcion": "Mini cheese, sobre de papas, lata de Coca 220ml, libro para colorear ",
     "precio": 12900,
     "categoria": "Kids",
-    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1778889721/saqoozkqcysevxjibmck.webp",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031762/crmny5tztxdn8d2b9uio.webp",
     "destacado": false,
     "disponible": true
   },
   {
-    "nombre": "Cajita My Melody Kuromi",
+    "nombre": "Cajita Paw Patrol - Dinosaurios",
     "descripcion": "Mini cheese, sobre de papas, lata de Coca 220ml, libro para colorear ",
     "precio": 12900,
     "categoria": "Kids",
-    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1778889784/fol69lyd8icr0bdhrqwx.webp",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031802/fvybxgemfmzpwfmiahxy.webp",
     "destacado": false,
     "disponible": true
   },
   {
-    "nombre": "Cajita Roblox",
+    "nombre": "Cajita Paw Patrol",
     "descripcion": "Mini cheese, sobre de papas, lata de Coca 220ml, libro para colorear ",
     "precio": 12900,
     "categoria": "Kids",
-    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1778889805/tvmx5qybpapmafrpfsv6.webp",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031876/ilc8xiqcfdukgxn163zr.webp",
+    "destacado": false,
+    "disponible": true
+  },
+ {
+    "nombre": "Cajita Minions",
+    "descripcion": "Mini cheese, sobre de papas, lata de Coca 220ml, libro para colorear ",
+    "precio": 12900,
+    "categoria": "Kids",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792031906/ez6xlqqv1wgzm4nrvowu.webp",
     "destacado": false,
     "disponible": true
   },
