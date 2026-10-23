@@ -114,6 +114,16 @@
     "sumaPuntos": false
   },
 
+    {
+    "nombre": "La 10",
+    "descripcion": "Pan, Mayonesa, Doble carne, cheddar x4, bacon x2 y huevo",
+    "precio": 10000,
+    "categoria": "Burgers",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792794139/v4fau0m9ylruxpl187hz.webp",
+    "destacado": false,
+    "sumaPuntos": false
+  },
+
  
   {
     "nombre": "Pollo frito 3 piezas",
