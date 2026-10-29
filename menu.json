@@ -9,6 +9,35 @@
     "destacado": false,
     "disponible": true
   },
+
+  {
+    "nombre": "American simple",
+    "descripcion": "Pan, mayonesa, carne, cheddar, cebolla caramelizada, bacon, lechuga",
+    "precio": 10500,
+    "categoria": "Burgers",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375253/u676h7nh4dzokypxengm.webp",
+    "destacado": false,
+      "sumaPuntos": true
+  },
+  {
+    "nombre": "American doble",
+    "descripcion": "Pan, mayonesa, doble carne, doble cheddar, cebolla caramelizada, bacon, lechuga",
+    "precio": 12500,
+    "categoria": "Burgers",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375253/u676h7nh4dzokypxengm.webp",
+    "destacado": false,
+      "sumaPuntos": true
+  },
+  {
+    "nombre": "Boom",
+    "descripcion": "Pan, mayonesa, colchón de papas fritas, carne rellena de muzza, cheddar, huevo",
+    "precio": 12500,
+    "categoria": "Burgers",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1779414526/zm076qsfzpiaug5grbez.webp",
+    "destacado": false,
+    "disponible": true,
+      "sumaPuntos": true
+  },
   {
     "nombre": "Bangkok Doble",
     "descripcion": "Pan, mayonesa, doble carne, mostaza, cheddar y cebolla salteada",
@@ -115,7 +144,7 @@
   },
 
     {
-    "nombre": "La 10",
+    "nombre": "La 10 doble",
     "descripcion": "Pan, Mayonesa, Doble carne, cheddar x4, bacon x2 y huevo",
     "precio": 10000,
     "categoria": "Burgers",
