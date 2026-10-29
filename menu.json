@@ -17,7 +17,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375253/u676h7nh4dzokypxengm.webp",
     "destacado": false,
-      "sumaPuntos": true
+      "sumaPuntos": false
   },
   {
     "nombre": "American doble",
@@ -26,7 +26,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375253/u676h7nh4dzokypxengm.webp",
     "destacado": false,
-      "sumaPuntos": true
+      "sumaPuntos": false
   },
   {
     "nombre": "Boom",
@@ -36,7 +36,7 @@
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1779414526/zm076qsfzpiaug5grbez.webp",
     "destacado": false,
     "disponible": true,
-      "sumaPuntos": true
+      "sumaPuntos": false
   },
   {
     "nombre": "Bangkok Doble",
