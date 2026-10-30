@@ -146,7 +146,7 @@
     {
     "nombre": "La 10 doble",
     "descripcion": "Pan, Mayonesa, Doble carne, cheddar x4, bacon x2 y huevo",
-    "precio": 10000,
+    "precio": 11500,
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792794139/v4fau0m9ylruxpl187hz.webp",
     "destacado": false,
