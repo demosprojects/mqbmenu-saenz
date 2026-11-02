@@ -476,7 +476,15 @@
     "destacado": false,
     "disponible": true
   },
- 
+ {
+    "nombre": "Vaso de fernet 750cc",
+    "descripcion": "Vaso de fernet con vaso de regalo.",
+    "precio": 9500,
+    "categoria": "Con alcohol",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1781406805/hwg0o5sqclshobhjmamu.webp",
+    "destacado": false,
+    "disponible": true
+  },
   {
     "nombre": "Heineken 1L",
     "descripcion": "Cerveza de vidrio de 1L",
