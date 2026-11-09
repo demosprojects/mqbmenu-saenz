@@ -10,6 +10,18 @@
     "disponible": true
   },
 
+
+  {
+    "nombre": "Yankee doble + sobre de papas",
+    "descripcion": "Yankee doble + sobre de papas",
+    "precio": 10000,
+    "categoria": "Burgers",
+    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1794265609/azb4euilw1zcahovkft2.webp",
+    "destacado": false,
+      "sumaPuntos": false
+  },
+
+
   {
     "nombre": "American simple",
     "descripcion": "Pan, mayonesa, carne, cheddar, cebolla caramelizada, bacon, lechuga",
