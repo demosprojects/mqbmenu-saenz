@@ -10,15 +10,7 @@
     "disponible": true
   },
 
-  {
-    "nombre": "Clasica +Cheese",
-    "descripcion": "Llevando dos Clasica simple + Cheese simple te quedan a $15.000",
-    "precio": 15000,
-    "categoria": "Burgers",
-    "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1794867959/z8a7nldxfzskh9biaqq5.webp",
-    "destacado": false,
-    "disponible": true
-  },
+
 
   {
     "nombre": "American simple",
