@@ -7,7 +7,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1786406275/n1mpfbk7quy5ghbsioxs.webp",
     "destacado": false,
-    "disponible": true,
+    "disponible": true
   
   },
 
@@ -20,7 +20,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375253/u676h7nh4dzokypxengm.webp",
     "destacado": false,
-      "sumaPuntos": false,
+      "sumaPuntos": false
    
   },
   {
@@ -30,8 +30,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375253/u676h7nh4dzokypxengm.webp",
     "destacado": false,
-      "sumaPuntos": false,
-
+      "sumaPuntos": false
   },
   {
     "nombre": "Boom",
@@ -41,7 +40,7 @@
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1779414526/zm076qsfzpiaug5grbez.webp",
     "destacado": false,
     "disponible": true,
-      "sumaPuntos": false,
+      "sumaPuntos": false
    
   },
   {
@@ -51,7 +50,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1786406275/n1mpfbk7quy5ghbsioxs.webp",
     "destacado": false,
-    "disponible": true,
+    "disponible": true
     
   },
   {
@@ -61,7 +60,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375445/nvantenumshyeqd2b4um.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
  
   },
   {
@@ -71,7 +70,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375445/nvantenumshyeqd2b4um.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
   },
   {
     "nombre": "Blue simple",
@@ -81,7 +80,7 @@
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1772409294/v87b4kjgyhqdhdrnz0dx.webp",
     "destacado": false,
     "disponible": true,
-    "sumaPuntos": false,
+    "sumaPuntos": false
 
   },
   {
@@ -92,7 +91,7 @@
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1772409351/whicmrbilcfqzstu2hqn.webp",
     "destacado": false,
     "disponible": true,
-    "sumaPuntos": false,
+    "sumaPuntos": false
   
   },
   
@@ -103,7 +102,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375692/brqisevanmuk6epxxvqc.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
    
   },
   {
@@ -113,7 +112,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375692/brqisevanmuk6epxxvqc.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
    
   },
   
@@ -124,7 +123,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375378/rzm2mvsvlpygjxrahg5y.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
    
   },
   {
@@ -134,7 +133,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375378/rzm2mvsvlpygjxrahg5y.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
    
   },
   
@@ -145,7 +144,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375550/dnscdxhybleudjhrlyvp.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
   
   },
   {
@@ -155,7 +154,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1771375550/dnscdxhybleudjhrlyvp.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
     
   },
 
@@ -166,7 +165,7 @@
     "categoria": "Burgers",
     "imagen": "https://res.cloudinary.com/dl2tftoum/image/upload/v1792794139/v4fau0m9ylruxpl187hz.webp",
     "destacado": false,
-    "sumaPuntos": false,
+    "sumaPuntos": false
    
   },
 
